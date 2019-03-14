@@ -1,0 +1,43 @@
+{
+  "name": "hangersteak",
+  "version": "0.0.1",
+  "description": "Node web static files server",
+  "main": "index.js",
+  "author": "fugroup <vidar@fugroup.net>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fugroup/hangersteak.git"
+  },
+  "private": false,
+  "scripts": {
+    "start": "concurrently --handle-input \"nodemon server.js\"",
+    "test": "jest --watch"
+  },
+  "devDependencies": {
+    "concurrently": "^4.0.1",
+    "jest": "^23.6.0",
+    "request": "^2.88.0"
+  },
+  "dependencies": {
+    "mime-types": "^2.1.20"
+  },
+  "files": [
+    "index.js",
+    "lib"
+  ],
+  "keywords": [
+    "server",
+    "webserver",
+    "fast",
+    "minimal",
+    "node",
+    "http",
+    "https",
+    "ssl",
+    "secure",
+    "file-server",
+    "static",
+    "microservice"
+  ]
+}
