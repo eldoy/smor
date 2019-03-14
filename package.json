@@ -1,6 +1,6 @@
 {
   "name": "hangersteak",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Node web static files server",
   "main": "index.js",
   "author": "fugroup <vidar@fugroup.net>",
