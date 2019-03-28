@@ -1,7 +1,7 @@
 {
   "name": "hangersteak",
-  "version": "0.0.4",
-  "description": "Node web static files server",
+  "version": "0.0.5",
+  "description": "Node static file web server",
   "main": "index.js",
   "author": "fugroup <vidar@fugroup.net>",
   "license": "MIT",

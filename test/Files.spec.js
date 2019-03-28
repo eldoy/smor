@@ -114,7 +114,6 @@ describe('Files', () => {
     },
     (err, res, body) => {
       expect(res.statusCode).toEqual(404)
-      expect(res.headers['content-type']).toEqual('text/plain; charset=utf-8')
       expect(typeof body).toEqual('string')
       expect(body).toEqual('')
       done()
