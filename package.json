@@ -11,11 +11,10 @@
   },
   "private": false,
   "scripts": {
-    "start": "concurrently --handle-input \"nodemon server.js\"",
+    "start": "nodemon server.js",
     "test": "jest --watch"
   },
   "devDependencies": {
-    "concurrently": "^4.0.1",
     "jest": "^23.6.0",
     "request": "^2.88.0"
   },
