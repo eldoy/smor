@@ -9,10 +9,14 @@ Node web static files server
 Vanilla NodeJS server. Will return 404 if not found, or the file using streams and correct mime type. Supports automatic 304 last modified headers.
 ```javascript
 const http = require('http')
-const Hangersteak = require('hangersteak')
+const hangersteak = require('hangersteak')
 
 const server = http.createServer((req, res) => {
-  new Hangersteak(req, res, { dir: 'dist' })
+  // Using default options
+  hangersteak(req, res)
+
+  // With options, default values shown
+  hangersteak(req, res, { dir: '', maxAge: 3600, indexFile: 'index.html' })
 })
 
 server.listen(3000)
