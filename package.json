@@ -1,6 +1,6 @@
 {
   "name": "hangersteak",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Node static file web server",
   "main": "index.js",
   "author": "Vidar Eldøy <vidar@eldoy.com>",
@@ -18,6 +18,8 @@
     "request": "^2.88.0"
   },
   "dependencies": {
+    "accepts": "^1.3.7",
+    "compressible": "^2.0.18",
     "mime-types": "^2.1.26"
   },
   "files": [

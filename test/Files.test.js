@@ -4,7 +4,8 @@ const base = 'http://localhost:3000'
 describe('Files', () => {
   it('should serve static css file', (done) => {
     request.get({
-      url: `${base}/css/app.css`
+      url: `${base}/css/app.css`,
+      gzip: true
     },
     (err, res, body) => {
       expect(res.statusCode).toEqual(200)
@@ -17,7 +18,8 @@ describe('Files', () => {
 
   it('should serve static js file', (done) => {
     request.get({
-      url: `${base}/js/app.js`
+      url: `${base}/js/app.js`,
+      gzip: true
     },
     (err, res, body) => {
       expect(res.statusCode).toEqual(200)
@@ -30,7 +32,8 @@ describe('Files', () => {
 
   it('should serve static html file', (done) => {
     request.get({
-      url: `${base}/file.html`
+      url: `${base}/file.html`,
+      gzip: true
     },
     (err, res, body) => {
       expect(res.statusCode).toEqual(200)
@@ -43,7 +46,8 @@ describe('Files', () => {
 
   it('should serve static html index file', (done) => {
     request.get({
-      url: `${base}/`
+      url: `${base}/`,
+      gzip: true
     },
     (err, res, body) => {
       expect(res.statusCode).toEqual(200)
@@ -56,7 +60,8 @@ describe('Files', () => {
 
   it('should serve deep static html index file', (done) => {
     request.get({
-      url: `${base}/deep/`
+      url: `${base}/deep/`,
+      gzip: true
     },
     (err, res, body) => {
       expect(res.statusCode).toEqual(200)
@@ -69,7 +74,8 @@ describe('Files', () => {
 
   it('should serve static html empty file', (done) => {
     request.get({
-      url: `${base}/empty.html`
+      url: `${base}/empty.html`,
+      gzip: true
     },
     (err, res, body) => {
       expect(res.statusCode).toEqual(200)
@@ -82,7 +88,8 @@ describe('Files', () => {
 
   it('should serve static html tar.gz file', (done) => {
     request.get({
-      url: `${base}/file.tar.gz`
+      url: `${base}/file.tar.gz`,
+      gzip: true
     },
     (err, res, body) => {
       expect(res.statusCode).toEqual(200)
@@ -95,7 +102,8 @@ describe('Files', () => {
 
   it('should serve static html jquery.min.js file', (done) => {
     request.get({
-      url: `${base}/js/jquery.min.js`
+      url: `${base}/js/jquery.min.js`,
+      gzip: true
     },
     (err, res, body) => {
       expect(res.statusCode).toEqual(200)

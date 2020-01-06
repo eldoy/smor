@@ -1,6 +1,6 @@
 # Hangersteak
 
-Node web static files server
+Node web static files server with built in compression support.
 
 ### INSTALL
 ```npm i hangersteak``` or ```yarn add hangersteak```

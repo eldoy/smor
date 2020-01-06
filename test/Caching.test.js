@@ -2,9 +2,10 @@ const request = require('request')
 const base = 'http://localhost:3000'
 
 describe('Caching', () => {
-  it('should return last modified headers for files', (done) => {
+  it('should not return last modified headers for files', (done) => {
     request.get({
-      url: `${base}/css/app.css`
+      url: `${base}/css/app.css`,
+      gzip: true
     },
     (err, res, body) => {
       expect(res.statusCode).toEqual(200)
@@ -20,7 +21,7 @@ describe('Caching', () => {
     request.get({
       url: `${base}/css/app.css`,
       headers: {
-        'if-modified-since': (new Date()).toUTCString()
+        'if-modified-since': new Date().toUTCString()
       }
     },
     (err, res, body) => {
