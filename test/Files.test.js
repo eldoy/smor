@@ -54,6 +54,19 @@ describe('Files', () => {
     })
   })
 
+  it('should serve deep static html index file', (done) => {
+    request.get({
+      url: `${base}/deep/`
+    },
+    (err, res, body) => {
+      expect(res.statusCode).toEqual(200)
+      expect(res.headers['content-type']).toEqual('text/html; charset=utf-8')
+      expect(typeof body).toEqual('string')
+      expect(body).toMatch("<h1>Deep</h1>")
+      done()
+    })
+  })
+
   it('should serve static html empty file', (done) => {
     request.get({
       url: `${base}/empty.html`
