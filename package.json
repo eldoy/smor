@@ -1,25 +1,24 @@
 {
   "name": "hangersteak",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Node static file web server",
   "main": "index.js",
-  "author": "fugroup <vidar@fugroup.net>",
+  "author": "Vidar Eldøy <vidar@eldoy.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/fugroup/hangersteak.git"
   },
-  "private": false,
   "scripts": {
     "start": "nodemon server.js",
     "test": "jest --watch"
   },
   "devDependencies": {
-    "jest": "^23.6.0",
+    "jest": "^24.9.0",
     "request": "^2.88.0"
   },
   "dependencies": {
-    "mime-types": "^2.1.20"
+    "mime-types": "^2.1.26"
   },
   "files": [
     "index.js",
