@@ -16,7 +16,12 @@ const server = http.createServer((req, res) => {
   hangersteak(req, res)
 
   // With options, default values shown
-  hangersteak(req, res, { dir: '', maxAge: 3600, indexFile: 'index.html' })
+  hangersteak(req, res, {
+    dir: '',
+    maxAge: 3600,
+    indexFile: 'index.html',
+    compress: false
+  })
 })
 
 server.listen(3000)
