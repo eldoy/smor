@@ -1,13 +1,13 @@
 {
   "name": "hangersteak",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Node static file web server",
   "main": "index.js",
   "author": "Vidar Eldøy <vidar@eldoy.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fugroup/hangersteak.git"
+    "url": "https://github.com/eldoy/hangersteak.git"
   },
   "scripts": {
     "start": "nodemon server.js",

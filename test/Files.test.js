@@ -140,4 +140,17 @@ describe('Files', () => {
       done()
     })
   })
+
+  it('should not traverse below root directory', (done) => {
+    request({
+      method: 'GET',
+      url: `${base}/../index.js`
+    },
+    (err, res, body) => {
+      expect(res.statusCode).toEqual(404)
+      expect(typeof body).toEqual('string')
+      expect(body).toEqual('')
+      done()
+    })
+  })
 })
