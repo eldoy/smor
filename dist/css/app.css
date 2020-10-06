@@ -1,0 +1,10 @@
+body {
+  color: orange;
+  font-family: sans-serif;
+  background-color: black;
+}
+
+section {
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
