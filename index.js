@@ -133,9 +133,9 @@ module.exports = async function(req, res, customOptions = {}) {
     // Return a byte range if the client asks for it
     if (range) {
       const parts = range.replace(/bytes=/, '').split('-')
-      const start = parseInt(parts[0], 10)
-      const end = parts[1] ? parseInt(parts[1], 10) : totalSize - 1
-      const chunkLength = (end - start) + 1
+      const start = parseInt(parts[0])
+      const end = parts[1] ? parseInt(parts[1]) : totalSize - 1
+      const chunkLength = end - start + 1
       const headers = {
         'content-range': `bytes ${start}-${end}/${totalSize}`,
         'accept-ranges': 'bytes'
