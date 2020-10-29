@@ -41,13 +41,9 @@ function accepted(req) {
 
 // Apply correct compressor, default is gzip
 function compressor(algorithm) {
-  if (algorithm === 'deflate') {
-    return zlib.createDeflate()
-  } else if (algorithm === 'br') {
-    return zlib.createBrotliCompress()
-  } else {
-    return zlib.createGzip()
-  }
+  if (algorithm === 'deflate') return zlib.createDeflate()
+  if (algorithm === 'br') return zlib.createBrotliCompress()
+  return zlib.createGzip()
 }
 
 // Set up a read stream
@@ -91,9 +87,7 @@ async function fileStats(filePath) {
 // Set up file asset
 async function asset(req, filePath) {
   const stat = await fileStats(filePath)
-  if (!stat) {
-    return null
-  }
+  if (!stat) return null
   const modifiedSince = req.headers['if-modified-since']
   const modifiedDate = new Date(Date.parse(modifiedSince))
   const lastModified = new Date(stat.mtime)
@@ -107,47 +101,41 @@ module.exports = async function(req, res, customOptions = {}) {
 
   // File name and path
   let fileName = decodeURIComponent(req.url)
-  if (fileName.endsWith('/')) {
-    fileName += options.indexFile
-  }
+  if (fileName.endsWith('/')) fileName += options.indexFile
   const base = path.join(ROOT, options.dir)
   const filePath = path.join(base, fileName)
 
   // Look for requested file
-  let file
-  if (filePath.startsWith(base)) {
-    file = await asset(req, filePath)
-  }
-  if (!file) {
-    // Return 404 if not found
-    send(res, 404)
-  } else if (file.fresh) {
-    // Return 304 Not Modified if possible
-    send(res, 304)
-  } else {
-    // Stream file if it exists
-    const stream = pipe(req, res, options, fileName, filePath)
-    const totalSize = file.stat.size
-    const range = req.headers.range
+  const file = filePath.startsWith(base) ? await asset(req, filePath) : 0
 
-    // Return a byte range if the client asks for it
-    if (range) {
-      const parts = range.replace(/bytes=/, '').split('-')
-      const start = parseInt(parts[0])
-      const end = parts[1] ? parseInt(parts[1]) : totalSize - 1
-      const chunkLength = end - start + 1
-      const headers = {
-        'content-range': `bytes ${start}-${end}/${totalSize}`,
-        'accept-ranges': 'bytes'
-      }
-      stream(206, headers, chunkLength, start, end)
-    } else {
-      // Stream the full file if no range requested
-      const headers = {
-        'cache-control': `max-age=${options.maxAge}`,
-        'last-modified': file.lastModified.toUTCString()
-      }
-      stream(200, headers, totalSize)
+  // Return 404 if not found
+  if (!file) return send(res, 404)
+
+  // Return 304 Not Modified if possible
+  if (file.fresh) return send(res, 304)
+
+  // Stream file if it exists
+  const stream = pipe(req, res, options, fileName, filePath)
+  const totalSize = file.stat.size
+  const range = req.headers.range
+
+  // Stream the full file if no range requested
+  if (!range) {
+    const headers = {
+      'cache-control': `max-age=${options.maxAge}`,
+      'last-modified': file.lastModified.toUTCString()
     }
+    return stream(200, headers, totalSize)
   }
+
+  // Return a byte range if the client asks for it
+  const parts = range.replace(/bytes=/, '').split('-')
+  const start = parseInt(parts[0])
+  const end = parts[1] ? parseInt(parts[1]) : totalSize - 1
+  const chunkLength = end - start + 1
+  const headers = {
+    'content-range': `bytes ${start}-${end}/${totalSize}`,
+    'accept-ranges': 'bytes'
+  }
+  stream(206, headers, chunkLength, start, end)
 }
