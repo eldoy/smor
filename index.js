@@ -100,7 +100,8 @@ async function asset(req, filePath) {
 module.exports = async function(req, res, customOptions = {}) {
   const options = { ...DEFAULT_OPTIONS, ...customOptions }
 
-  rekvest(req)
+  // Parse request if pathname is missing
+  if (!req.pathname) rekvest(req)
 
   // File name and path
   let fileName = req.pathname
