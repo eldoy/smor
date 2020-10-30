@@ -5,6 +5,7 @@ const compressible = require('compressible')
 const accepts = require('accepts')
 const vary = require('vary')
 const zlib = require('zlib')
+const rekvest = require('rekvest')
 
 const NOTRANSFORM = /(?:^|,)\s*?no-transform\s*?(?:,|$)/
 const THRESHOLD = 1024
@@ -99,14 +100,18 @@ async function asset(req, filePath) {
 module.exports = async function(req, res, customOptions = {}) {
   const options = { ...DEFAULT_OPTIONS, ...customOptions }
 
+  rekvest(req)
+
   // File name and path
-  let fileName = decodeURIComponent(req.url)
-  if (fileName.endsWith('/')) fileName += options.indexFile
+  let fileName = req.pathname
+  if (fileName.endsWith('/')) {
+    fileName += options.indexFile
+  }
   const base = path.join(ROOT, options.dir)
   const filePath = path.join(base, fileName)
 
   // Look for requested file
-  const file = filePath.startsWith(base) ? await asset(req, filePath) : 0
+  const file = filePath.startsWith(base) ? await asset(req, filePath) : null
 
   // Return 404 if not found
   if (!file) return send(res, 404)

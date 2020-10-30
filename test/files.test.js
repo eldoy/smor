@@ -153,4 +153,30 @@ describe('Files', () => {
       done()
     })
   })
+
+  it('should work with query parameters', (done) => {
+    request({
+      method: 'GET',
+      url: `${base}/?query=1`
+    },
+    (err, res, body) => {
+      expect(res.statusCode).toEqual(200)
+      expect(typeof body).toEqual('string')
+      expect(body).toMatch('Hello')
+      done()
+    })
+  })
+
+  it('should support index file option', (done) => {
+    request({
+      method: 'GET',
+      url: `${base}/?conf=1`
+    },
+    (err, res, body) => {
+      expect(res.statusCode).toEqual(200)
+      expect(typeof body).toEqual('string')
+      expect(body).toMatch('Index2')
+      done()
+    })
+  })
 })
