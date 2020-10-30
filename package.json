@@ -14,7 +14,7 @@
     "test": "jest --watch"
   },
   "devDependencies": {
-    "jest": "^26.5.0",
+    "jest": "^26.6.1",
     "request": "^2.88.0"
   },
   "dependencies": {
