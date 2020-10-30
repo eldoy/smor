@@ -179,4 +179,17 @@ describe('Files', () => {
       done()
     })
   })
+
+  it('should support work with absolute paths', (done) => {
+    request({
+      method: 'GET',
+      url: `${base}/file.html?conf=2`
+    },
+    (err, res, body) => {
+      expect(res.statusCode).toEqual(200)
+      expect(typeof body).toEqual('string')
+      expect(body).toMatch('File')
+      done()
+    })
+  })
 })

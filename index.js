@@ -105,10 +105,9 @@ module.exports = async function(req, res, customOptions = {}) {
 
   // File name and path
   let fileName = req.pathname
-  if (fileName.endsWith('/')) {
-    fileName += options.indexFile
-  }
-  const base = path.join(ROOT, options.dir)
+  if (fileName.endsWith('/')) fileName += options.indexFile
+
+  const base = options.dir.startsWith('/') ? options.dir : path.join(ROOT, options.dir)
   const filePath = path.join(base, fileName)
 
   // Look for requested file
