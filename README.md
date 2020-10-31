@@ -17,7 +17,7 @@ const server = http.createServer((req, res) => {
 
   // With options, default values shown
   hangersteak(req, res, {
-    dir: '',
+    dir: '', // Start with '/' to use absolute path
     maxAge: 3600,
     indexFile: 'index.html',
     compress: false
