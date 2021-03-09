@@ -76,7 +76,6 @@ function pipe(req, res, options, fileName, filePath) {
 
 // Get file stats
 async function fileStats(filePath) {
-  console.log({ filePath })
   try {
     return await new Promise(function(resolve, reject) {
       fs.stat(filePath, function(err, stat) {
@@ -101,15 +100,8 @@ async function asset(req, filePath) {
 module.exports = async function(req, res, customOptions = {}) {
   const options = { ...DEFAULT_OPTIONS, ...customOptions }
 
-  // console.log({ url: req.url })
-
-
   // Parse request if pathname is missing
   if (!req.pathname) rekvest(req)
-
-  console.log(req.query.baner)
-
-  // console.log(decodeURIComponent(req.pathname))
 
   // File name and path
   let fileName = req.pathname
