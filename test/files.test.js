@@ -121,4 +121,11 @@ describe('Files', () => {
     expect(typeof result.body).toEqual('string')
     expect(result.body).toMatch('File')
   })
+
+  it('should match filenames with special characters', async () => {
+    const result = await got(`${base}/æøå.html?baner=æøø`)
+    expect(result.statusCode).toEqual(200)
+    expect(typeof result.body).toEqual('string')
+    expect(result.body).toMatch('æøå')
+  })
 })
