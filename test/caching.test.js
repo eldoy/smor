@@ -1,34 +1,25 @@
-const request = require('request')
+const got = require('got')
 const base = 'http://localhost:3000'
 
 describe('Caching', () => {
-  it('should not return last modified headers for files', (done) => {
-    request.get({
-      url: `${base}/css/app.css`,
-      gzip: true
-    },
-    (err, res, body) => {
-      expect(res.statusCode).toEqual(200)
-      expect(res.headers['content-type']).toEqual('text/css; charset=utf-8')
-      expect(res.headers['last-modified']).toBeDefined()
-      expect(typeof body).toEqual('string')
-      expect(body).toMatch('body {')
-      done()
-    })
+  it('should not return last modified headers for files', async () => {
+    const result = await got(`${base}/css/app.css`)
+    expect(result.statusCode).toEqual(200)
+    expect(result.headers['content-type']).toEqual('text/css; charset=utf-8')
+    expect(result.headers['last-modified']).toBeDefined()
+    expect(typeof result.body).toEqual('string')
+    expect(result.body).toMatch('body {')
   })
 
-  it('should return last modified headers for files', (done) => {
-    request.get({
+  it('should return last modified headers for files', async () => {
+    const result = await got({
       url: `${base}/css/app.css`,
       headers: {
         'if-modified-since': new Date().toUTCString()
       }
-    },
-    (err, res, body) => {
-      expect(res.statusCode).toEqual(304)
-      expect(typeof body).toEqual('string')
-      expect(body).toMatch('')
-      done()
     })
+    expect(result.statusCode).toEqual(304)
+    expect(typeof result.body).toEqual('string')
+    expect(result.body).toMatch('')
   })
 })
