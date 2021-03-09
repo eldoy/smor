@@ -1,6 +1,6 @@
 {
   "name": "hangersteak",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Node static file web server",
   "main": "index.js",
   "author": "Vidar Eldøy <vidar@eldoy.com>",
