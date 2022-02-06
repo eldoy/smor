@@ -3,11 +3,14 @@
 Node web static files server with built in compression support.
 
 ### INSTALL
+
 ```npm i hangersteak```
 
 ### USAGE
+
 Vanilla NodeJS server. Will return 404 if not found, or the file using streams and correct mime type. Supports automatic 304 last modified headers.
-```javascript
+
+```js
 const http = require('http')
 const hangersteak = require('hangersteak')
 

@@ -10,17 +10,17 @@
     "url": "https://github.com/eldoy/hangersteak.git"
   },
   "scripts": {
-    "serve": "nodemon server.js",
+    "serve:test": "nodemon dev.js",
     "test": "jest --watch"
   },
   "devDependencies": {
-    "got": "^11.8.2",
-    "jest": "^26.6.3"
+    "got": "^11.8.3",
+    "jest": "^27.5.0"
   },
   "dependencies": {
-    "accepts": "^1.3.7",
+    "accepts": "^1.3.8",
     "compressible": "^2.0.18",
-    "mime-types": "^2.1.29",
+    "mime-types": "^2.1.34",
     "rekvest": "^0.1.4",
     "vary": "^1.1.2"
   },
