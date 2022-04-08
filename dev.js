@@ -1,5 +1,5 @@
 const http = require('http')
-const hangersteak = require('./index')
+const smor = require('./index')
 
 const CONFIGS = {
   '1': {
@@ -15,7 +15,7 @@ const server = http.createServer((req, res) => {
   const query = req.url.split('?')[1]
   const config = query ? query.split('conf=')[1] : '0'
   const conf = CONFIGS[config] || { dir: 'dist' }
-  hangersteak(req, res, conf)
+  smor(req, res, conf)
 })
 
 server.listen(3000)

@@ -1,13 +1,13 @@
 {
-  "name": "hangersteak",
-  "version": "0.2.12",
+  "name": "smor",
+  "version": "0.1.0",
   "description": "Node static file web server",
   "main": "index.js",
   "author": "Vidar Eldøy <vidar@eldoy.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/eldoy/hangersteak.git"
+    "url": "https://github.com/eldoy/smor.git"
   },
   "scripts": {
     "serve:test": "nodemon dev.js",
