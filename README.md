@@ -2,19 +2,21 @@
 
 Node web static files server with built in compression support.
 
-### INSTALL
+### Install
 
-```npm i smor```
+```
+npm i smor
+```
 
-### USAGE
+### Usage
 
 Vanilla NodeJS server. Will return 404 if not found, or the file using streams and correct mime type. Supports automatic 304 last modified headers.
 
 ```js
-const http = require('http')
-const smor = require('smor')
+var http = require('http')
+var smor = require('smor')
 
-const server = http.createServer((req, res) => {
+var server = http.createServer((req, res) => {
   // Using default options
   smor(req, res)
 
@@ -29,4 +31,7 @@ const server = http.createServer((req, res) => {
 
 server.listen(3000)
 ```
+
 MIT licensed. Enjoy!
+
+Created by [Eldøy Projects](https://eldoy.com)
