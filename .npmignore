@@ -1,3 +1,7 @@
-test
-dist
-dev.js
+/test
+/dist
+/app
+/docs
+/build.js
+/spec
+/server.js
