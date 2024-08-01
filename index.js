@@ -1,16 +1,16 @@
-const fs = require('fs')
-const path = require('path')
-const mime = require('mime-types')
-const compressible = require('compressible')
-const accepts = require('accepts')
-const vary = require('vary')
-const zlib = require('zlib')
-const rekvest = require('rekvest')
+var fs = require('fs')
+var path = require('path')
+var mime = require('mime-types')
+var compressible = require('compressible')
+var accepts = require('accepts')
+var vary = require('vary')
+var zlib = require('zlib')
+var rekvest = require('rekvest')
 
-const NOTRANSFORM = /(?:^|,)\s*?no-transform\s*?(?:,|$)/
-const THRESHOLD = 1024
-const ROOT = process.cwd()
-const DEFAULT_OPTIONS = {
+var NOTRANSFORM = /(?:^|,)\s*?no-transform\s*?(?:,|$)/
+var THRESHOLD = 1024
+var ROOT = process.cwd()
+var DEFAULT_OPTIONS = {
   dir: '',
   maxAge: 3600,
   indexFile: 'index.html',
@@ -30,14 +30,18 @@ function encoded(res) {
 
 // Don't transform if cache-control no-transform is set
 function transformable(res) {
-  const cacheControl = res.getHeader('cache-control')
+  var cacheControl = res.getHeader('cache-control')
   return !cacheControl || !NOTRANSFORM.test(cacheControl)
 }
 
 // Find accepted compressor algorithm
 function accepted(req) {
-  const accept = accepts(req)
-  return accept.encoding('br') || accept.encoding('gzip') || accept.encoding('deflate', 'identity')
+  var accept = accepts(req)
+  return (
+    accept.encoding('br') ||
+    accept.encoding('gzip') ||
+    accept.encoding('deflate', 'identity')
+  )
 }
 
 // Apply correct compressor, default is gzip
@@ -49,10 +53,10 @@ function compressor(algorithm) {
 
 // Set up a read stream
 function pipe(req, res, options, fileName, filePath) {
-  return function(status, headers, length, start, end) {
-    const type = mime.lookup(fileName) || 'application/octet-stream'
+  return function (status, headers, length, start, end) {
+    var type = mime.lookup(fileName) || 'application/octet-stream'
     res.setHeader('content-type', mime.contentType(type))
-    const stream = fs.createReadStream(filePath, { start, end })
+    var stream = fs.createReadStream(filePath, { start, end })
     if (
       options.compress &&
       req.method !== 'HEAD' &&
@@ -62,7 +66,7 @@ function pipe(req, res, options, fileName, filePath) {
       transformable(res) &&
       compressible(type)
     ) {
-      const algorithm = accepted(req)
+      var algorithm = accepted(req)
       res.setHeader('content-encoding', algorithm)
       res.writeHead(status, headers)
       stream.pipe(compressor(algorithm)).pipe(res)
@@ -77,28 +81,28 @@ function pipe(req, res, options, fileName, filePath) {
 // Get file stats
 async function fileStats(filePath) {
   try {
-    return await new Promise(function(resolve, reject) {
-      fs.stat(filePath, function(err, stat) {
+    return await new Promise(function (resolve, reject) {
+      fs.stat(filePath, function (err, stat) {
         err ? reject(err) : resolve(stat)
       })
     })
-  } catch(e) {}
+  } catch (e) {}
 }
 
 // Set up file asset
 async function asset(req, filePath) {
-  const stat = await fileStats(filePath)
+  var stat = await fileStats(filePath)
   if (!stat) return null
-  const modifiedSince = req.headers['if-modified-since']
-  const modifiedDate = new Date(Date.parse(modifiedSince))
-  const lastModified = new Date(stat.mtime)
-  const fresh = modifiedSince && modifiedDate >= lastModified
+  var modifiedSince = req.headers['if-modified-since']
+  var modifiedDate = new Date(Date.parse(modifiedSince))
+  var lastModified = new Date(stat.mtime)
+  var fresh = modifiedSince && modifiedDate >= lastModified
   return { stat, modifiedSince, modifiedDate, lastModified, fresh }
 }
 
 // Main function
-module.exports = async function(req, res, customOptions = {}) {
-  const options = { ...DEFAULT_OPTIONS, ...customOptions }
+module.exports = async function (req, res, customOptions = {}) {
+  var options = { ...DEFAULT_OPTIONS, ...customOptions }
 
   // Parse request if pathname is missing
   if (!req.pathname) rekvest(req)
@@ -107,11 +111,13 @@ module.exports = async function(req, res, customOptions = {}) {
   let fileName = req.pathname
   if (fileName.endsWith('/')) fileName += options.indexFile
 
-  const base = options.dir.startsWith('/') ? options.dir : path.join(ROOT, options.dir)
-  const filePath = path.join(base, fileName)
+  var base = options.dir.startsWith('/')
+    ? options.dir
+    : path.join(ROOT, options.dir)
+  var filePath = path.join(base, fileName)
 
   // Look for requested file
-  const file = filePath.startsWith(base) ? await asset(req, filePath) : null
+  var file = filePath.startsWith(base) ? await asset(req, filePath) : null
 
   // Return 404 if not found
   if (!file) return send(res, 404)
@@ -120,13 +126,13 @@ module.exports = async function(req, res, customOptions = {}) {
   if (file.fresh) return send(res, 304)
 
   // Stream file if it exists
-  const stream = pipe(req, res, options, fileName, filePath)
-  const totalSize = file.stat.size
-  const range = req.headers.range
+  var stream = pipe(req, res, options, fileName, filePath)
+  var totalSize = file.stat.size
+  var range = req.headers.range
 
   // Stream the full file if no range requested
   if (!range) {
-    const headers = {
+    var headers = {
       'cache-control': `max-age=${options.maxAge}`,
       'last-modified': file.lastModified.toUTCString()
     }
@@ -134,11 +140,11 @@ module.exports = async function(req, res, customOptions = {}) {
   }
 
   // Return a byte range if the client asks for it
-  const parts = range.replace(/bytes=/, '').split('-')
-  const start = parseInt(parts[0])
-  const end = parts[1] ? parseInt(parts[1]) : totalSize - 1
-  const chunkLength = end - start + 1
-  const headers = {
+  var parts = range.replace(/bytes=/, '').split('-')
+  var start = parseInt(parts[0])
+  var end = parts[1] ? parseInt(parts[1]) : totalSize - 1
+  var chunkLength = end - start + 1
+  var headers = {
     'content-range': `bytes ${start}-${end}/${totalSize}`,
     'accept-ranges': 'bytes'
   }
