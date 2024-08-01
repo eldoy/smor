@@ -10,7 +10,7 @@
     "url": "https://github.com/eldoy/smor.git"
   },
   "scripts": {
-    "serve:test": "nodemon dev.js",
+    "serve:test": "nodemon server.js",
     "test": "jest --watch"
   },
   "devDependencies": {
@@ -24,9 +24,6 @@
     "rekvest": "^0.1.4",
     "vary": "^1.1.2"
   },
-  "files": [
-    "index.js"
-  ],
   "keywords": [
     "server",
     "webserver",
