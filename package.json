@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/eldoy/smor.git"
+    "url": "git+https://github.com/eldoy/smor.git"
   },
   "scripts": {
     "serve:test": "nodemon server.js",
